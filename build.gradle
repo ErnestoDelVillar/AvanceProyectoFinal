@@ -2,8 +2,8 @@ plugins {
   id 'java'
   id 'application'
   id 'org.javamodularity.moduleplugin' version '1.8.12'
-  id 'org.openjfx.javafxplugin' version '0.0.13'
-  id 'org.beryx.jlink' version '2.25.0'
+  id 'org.openjfx.javafxplugin' version '0.1.0'
+  id 'org.beryx.jlink' version '3.0.1'
 }
 
 group 'com.example'
@@ -22,16 +22,17 @@ targetCompatibility = '21'
 
 tasks.withType(JavaCompile) {
   options.encoding = 'UTF-8'
+  options.release = 21
 }
 
 application {
-  mainModule = 'com.example.avanceproyectofinal'
-  mainClass = 'com.example.avanceproyectofinal.HelloApplication'
+  mainModule = 'com.example'
+  mainClass = 'com.example.HelloApplication'
 }
 
 javafx {
   version = '21'
-  modules = ['javafx.controls', 'javafx.fxml', 'javafx.web', 'javafx.swing' , 'javafx.media']
+  modules = ['javafx.controls', 'javafx.fxml', 'javafx.web', 'javafx.swing', 'javafx.media']
 }
 
 dependencies {
@@ -42,13 +43,13 @@ dependencies {
   implementation('net.synedra:validatorfx:0.5.0') {
     exclude(group: 'org.openjfx')
   }
+  implementation('org.kordamp.ikonli:ikonli-javafx:12.3.1')
   implementation('org.kordamp.bootstrapfx:bootstrapfx-core:0.4.0')
   implementation('eu.hansolo:tilesfx:21.0.3') {
     exclude(group: 'org.openjfx')
   }
   implementation('com.github.almasb:fxgl:17.3') {
     exclude(group: 'org.openjfx')
-    exclude(group: 'org.jetbrains.kotlin')
   }
 
   testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
@@ -56,7 +57,8 @@ dependencies {
 }
 
 test {
-useJUnitPlatform()}
+  useJUnitPlatform()
+}
 
 jlink {
   imageZip = project.file("${buildDir}/distributions/app-${javafx.platform.classifier}.zip")
@@ -68,4 +70,19 @@ jlink {
 
 jlinkZip {
   group = 'distribution'
+}
+
+java {
+  toolchain {
+    languageVersion = JavaLanguageVersion.of(21)
+  }
+}
+
+processResources {
+  from('src/main/resources') {
+    include '**/*.fxml'
+    include '**/*.png'
+  }
+  into 'resources' // Asegura que los recursos se copien manteniendo la estructura
+  duplicatesStrategy = DuplicatesStrategy.INCLUDE
 }

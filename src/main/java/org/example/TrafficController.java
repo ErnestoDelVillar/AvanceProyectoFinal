@@ -1,112 +1,505 @@
 package org.example;
 
+import javafx.animation.PauseTransition;
+import javafx.util.Duration;
+
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 import java.util.concurrent.Executors;
+import java.util.concurrent.PriorityBlockingQueue;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class TrafficController {
-    private final List<Intersection> intersections;
-    private final ScheduledExecutorService scheduler;
-    private final List<Runnable> vehicleUpdateListeners;
-    private final Object lock = new Object();
 
-    public TrafficController(List<Intersection> intersections) {
-        this.intersections = intersections;
-        this.scheduler = Executors.newScheduledThreadPool(10);
-        this.vehicleUpdateListeners = new ArrayList<>();
+    private Queue<Runnable> tasks = new LinkedList<>();
+
+    private final AtomicBoolean crossingNorthOccupied = new AtomicBoolean(false);
+    private final AtomicBoolean crossingSouthOccupied = new AtomicBoolean(false);
+    private final AtomicBoolean crossingEastOccupied = new AtomicBoolean(false);
+    private final AtomicBoolean crossingWestOccupied = new AtomicBoolean(false);
+
+    private PriorityBlockingQueue<Vehicle> queue = new PriorityBlockingQueue<>();
+    private PriorityBlockingQueue<Vehicle> Emergencyqueue = new PriorityBlockingQueue<>();
+
+    private final AtomicBoolean running = new AtomicBoolean(false);
+    private Thread workerThread;
+
+    public TrafficController() {
+        workerThread = new Thread(this::processQueue);
+        running.set(true);
+        workerThread.start();
     }
 
-    public void addVehicleUpdateListener(Runnable listener) {
-        vehicleUpdateListeners.add(listener);
+    private void scheduleNext() {
+        if (!tasks.isEmpty()) {
+            tasks.poll().run();
+        }
     }
 
-    public void startControl() {
-        // Manage intersections every 500ms for smooth updates
-        scheduler.scheduleAtFixedRate(this::manageIntersections, 0, 500, TimeUnit.MILLISECONDS);
-    }
-
-    private void manageIntersections() {
-        synchronized (lock) {
-            for (Intersection intersection : intersections) {
-                Vehicle nextVehicle = intersection.getNextVehicle();
-                if (nextVehicle != null && !nextVehicle.isInIntersection()) {
-                    if (isSafeToMove(nextVehicle, intersection)) {
-                        // Aqui permite que un vehiculo cruce
-                        Vehicle vehicle = intersection.removeNextVehicle();
-                        vehicle.setInIntersection(true);
-                        System.out.println("Vehicle " + vehicle.getId() + " (" + vehicle.getType() +
-                                ") moving " + vehicle.getDirection() + " at intersection " + intersection.getId());
-                        // Curce simulado
-                        Vehicle finalVehicle = vehicle;
-                        scheduler.schedule(() -> {
-                            synchronized (lock) {
-                                finalVehicle.setInIntersection(false);
-                                notifyVehicleUpdate();
-                            }
-                        }, 2, TimeUnit.SECONDS);
-                        // Solo un vehiculo cruza
-                        break;
+    private void processQueue() {
+        while (running.get()) {
+            if (!Emergencyqueue.isEmpty()) {
+                Vehicle emgvehicle = Emergencyqueue.poll();
+                for (Vehicle vehicle : queue) {
+                    if (vehicle.getCalle().equals(emgvehicle.getCalle())) {
+                        addVehicleAnimation(vehicle);
+                        if (vehicle == emgvehicle) {
+                            queue.remove(vehicle);
+                            break;
+                        }
+                        queue.remove(vehicle);
+                        try {
+                            Thread.sleep(3000);
+                        } catch (InterruptedException e) {
+                            Thread.currentThread().interrupt();
+                        }
+                    }
+                }
+            } else {
+                if (!queue.isEmpty()) {
+                    Vehicle vehicle = queue.poll();
+                    if (vehicle != null) {
+                        addVehicleAnimation(vehicle);
                     }
                 }
             }
-        }
-    }
-
-    private boolean isSafeToMove(Vehicle vehicle, Intersection intersection) {
-        // Rivisa si es seguro cruzar
-        return !vehicle.isInIntersection() &&
-                (!vehicle.getDirection().equals("right") || intersection.isRightTurnAllowed()) &&
-                !isIntersectionConflict(intersection);
-    }
-
-    private boolean isIntersectionConflict(Intersection current) {
-        // Prevent adjacent intersections from having vehicles crossing simultaneously
-        int currentIndex = intersections.indexOf(current);
-        List<Integer> adjacentIndices;
-        switch (currentIndex) {
-            case 0: // I1 (top-left)
-                adjacentIndices = List.of(1, 2);
-                break;
-            case 1: // I2 (top-right)
-                adjacentIndices = List.of(0, 3);
-                break;
-            case 2: // I3 (bottom-left)
-                adjacentIndices = List.of(0, 3);
-                break;
-            case 3: // I4 (bottom-right)
-                adjacentIndices = List.of(1, 2);
-                break;
-            default:
-                adjacentIndices = List.of();
-        }
-        for (int index : adjacentIndices) {
-            Vehicle otherVehicle = intersections.get(index).getNextVehicle();
-            if (otherVehicle != null && otherVehicle.isInIntersection()) {
-                return true;
+            try {
+                Thread.sleep(3000);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
             }
         }
-        return false;
     }
 
-    private void notifyVehicleUpdate() {
-        vehicleUpdateListeners.forEach(Runnable::run);
-    }
+    private synchronized void addVehicleAnimation(Vehicle vehicle) {
+        tasks.offer(() -> {
+            // VIENE DEL NORTE Y SIGUE DERECHO
+            if (vehicle.getCalle().equals("North") && vehicle.getDirection().equals("South")) {
+                while (crossingWestOccupied.get()) {
+                    try {
+                        wait(); // Espera hasta que el cruce se libere
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
+                }
+                crossingWestOccupied.set(true); // Marca el cruce como ocupado
 
-    public void stopControl() {
-        scheduler.shutdown();
-        try {
-            if (!scheduler.awaitTermination(5, TimeUnit.SECONDS)) {
-                scheduler.shutdownNow();
+                PauseTransition pause = new PauseTransition(Duration.millis(1));
+                pause.setOnFinished(event -> {
+                    HelloController.moveNorth(vehicle);
+                    HelloController.updatePositionsNorth();
+                    crossingWestOccupied.set(false); // Libera el cruce
+                    synchronized (this) {
+                        notifyAll(); // Notifica a otros vehículos que el cruce está libre
+                    }
+                    scheduleNext();
+                });
+                pause.play();
             }
-        } catch (InterruptedException e) {
-            scheduler.shutdownNow();
-            Thread.currentThread().interrupt();
-        }
+            // VIENE DEL NORTE Y DA LA VUELTA EN U
+            if (vehicle.getCalle().equals("North") && vehicle.getDirection().equals("North")) {
+                while (crossingNorthOccupied.get() || crossingWestOccupied.get() || crossingEastOccupied.get()) {
+                    try {
+                        wait(); // Espera hasta que el cruce se libere
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
+                }
+                crossingNorthOccupied.set(true);
+                crossingWestOccupied.set(true);
+                crossingEastOccupied.set(true);
+
+                PauseTransition pause = new PauseTransition(Duration.millis(1));
+                pause.setOnFinished(event -> {
+                    HelloController.moveNorthUTurn(vehicle);
+                    crossingNorthOccupied.set(false);
+                    crossingWestOccupied.set(false);
+                    crossingEastOccupied.set(false);
+                    synchronized (this) {
+                        notifyAll(); // Notifica a otros vehículos que el cruce está libre
+                    }
+                    scheduleNext();
+                });
+                pause.play();
+            }
+            // VIENE DEL NORTE Y GIRA A LA DERECHA
+            if (vehicle.getCalle().equals("North") && vehicle.getDirection().equals("West")) {
+                while (crossingNorthOccupied.get() || crossingWestOccupied.get()) {
+                    try {
+                        wait(); // Espera hasta que el cruce se libere
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
+                }
+                crossingNorthOccupied.set(true);
+                crossingWestOccupied.set(true);
+
+                PauseTransition pause = new PauseTransition(Duration.millis(1));
+                pause.setOnFinished(event -> {
+                    HelloController.moveNorthRightTurn(vehicle);
+                    crossingNorthOccupied.set(false);
+                    crossingWestOccupied.set(false);
+                    synchronized (this) {
+                        notifyAll(); // Notifica a otros vehículos que el cruce está libre
+                    }
+                    scheduleNext();
+                });
+                pause.play();
+            }
+            // VIENE DEL NORTE Y GIRA A LA IZQUIERDA
+            if (vehicle.getCalle().equals("North") && vehicle.getDirection().equals("East")) {
+                while (crossingNorthOccupied.get() || crossingWestOccupied.get() || crossingEastOccupied.get() || crossingSouthOccupied.get()) {
+                    try {
+                        wait(); // Espera hasta que el cruce se libere
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
+                }
+                crossingNorthOccupied.set(true);
+                crossingWestOccupied.set(true);
+                crossingEastOccupied.set(true);
+                crossingSouthOccupied.set(true);
+
+                PauseTransition pause = new PauseTransition(Duration.millis(1));
+                pause.setOnFinished(event -> {
+                    HelloController.moveNorthLeftTurn(vehicle);
+                    crossingNorthOccupied.set(false);
+                    crossingWestOccupied.set(false);
+                    crossingEastOccupied.set(false);
+                    crossingSouthOccupied.set(false);
+                    synchronized (this) {
+                        notifyAll(); // Notifica a otros vehículos que el cruce está libre
+                    }
+                    scheduleNext();
+                });
+                pause.play();
+            }
+
+            // VIENE DEL SUR Y SIGUE DERECHO
+            if (vehicle.getCalle().equals("South") && vehicle.getDirection().equals("North")) {
+                while (crossingEastOccupied.get()) {
+                    try {
+                        wait(); // Espera hasta que el cruce se libere
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
+                }
+                crossingEastOccupied.set(true); // Marca el cruce como ocupado
+
+                PauseTransition pause = new PauseTransition(Duration.millis(1));
+                pause.setOnFinished(event -> {
+                    HelloController.moveSouth(vehicle);
+                    HelloController.updatePositionsNorth();
+                    crossingEastOccupied.set(false); // Libera el cruce
+                    synchronized (this) {
+                        notifyAll(); // Notifica a otros vehículos que el cruce está libre
+                    }
+                    scheduleNext();
+                });
+                pause.play();
+            }
+            // VIENE DEL SUR Y DA LA VUELTA EN U
+            if (vehicle.getCalle().equals("South") && vehicle.getDirection().equals("South")) {
+                while (crossingSouthOccupied.get() || crossingWestOccupied.get() || crossingEastOccupied.get()) {
+                    try {
+                        wait(); // Espera hasta que el cruce se libere
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
+                }
+                crossingSouthOccupied.set(true);
+                crossingWestOccupied.set(true);
+                crossingEastOccupied.set(true);
+
+                PauseTransition pause = new PauseTransition(Duration.millis(1));
+                pause.setOnFinished(event -> {
+                    HelloController.moveSouthUTurn(vehicle);
+                    crossingSouthOccupied.set(false);
+                    crossingWestOccupied.set(false);
+                    crossingEastOccupied.set(false);
+                    synchronized (this) {
+                        notifyAll(); // Notifica a otros vehículos que el cruce está libre
+                    }
+                    scheduleNext();
+                });
+                pause.play();
+            }
+            // VIENE DEL SUR Y GIRA A LA DERECHA
+            if (vehicle.getCalle().equals("South") && vehicle.getDirection().equals("East")) {
+                while (crossingSouthOccupied.get() || crossingEastOccupied.get()) {
+                    try {
+                        wait(); // Espera hasta que el cruce se libere
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
+                }
+                crossingSouthOccupied.set(true);
+                crossingEastOccupied.set(true);
+
+                PauseTransition pause = new PauseTransition(Duration.millis(1));
+                pause.setOnFinished(event -> {
+                    HelloController.moveSouthRightTurn(vehicle);
+                    crossingSouthOccupied.set(false);
+                    crossingEastOccupied.set(false);
+                    synchronized (this) {
+                        notifyAll(); // Notifica a otros vehículos que el cruce está libre
+                    }
+                    scheduleNext();
+                });
+                pause.play();
+            }
+            // VIENE DEL SUR Y GIRA A LA IZQUIERDA
+            if (vehicle.getCalle().equals("South") && vehicle.getDirection().equals("West")) {
+                while (crossingNorthOccupied.get() || crossingWestOccupied.get() || crossingEastOccupied.get() || crossingSouthOccupied.get()) {
+                    try {
+                        wait(); // Espera hasta que el cruce se libere
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
+                }
+                crossingNorthOccupied.set(true);
+                crossingWestOccupied.set(true);
+                crossingEastOccupied.set(true);
+                crossingSouthOccupied.set(true);
+
+                PauseTransition pause = new PauseTransition(Duration.millis(1));
+                pause.setOnFinished(event -> {
+                    HelloController.moveSouthLeftTurn(vehicle);
+                    crossingNorthOccupied.set(false);
+                    crossingWestOccupied.set(false);
+                    crossingEastOccupied.set(false);
+                    crossingSouthOccupied.set(false);
+                    synchronized (this) {
+                        notifyAll(); // Notifica a otros vehículos que el cruce está libre
+                    }
+                    scheduleNext();
+                });
+                pause.play();
+            }
+
+            // VIENE DEL ESTE Y SIGUE DERECHO
+            if (vehicle.getCalle().equals("East") && vehicle.getDirection().equals("West")) {
+                while (crossingNorthOccupied.get()) {
+                    try {
+                        wait(); // Espera hasta que el cruce se libere
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
+                }
+                crossingNorthOccupied.set(true); // Marca el cruce como ocupado
+
+                PauseTransition pause = new PauseTransition(Duration.millis(1));
+                pause.setOnFinished(event -> {
+                    HelloController.moveEast(vehicle);
+                    HelloController.updatePositionsEast();
+                    crossingNorthOccupied.set(false); // Libera el cruce
+                    synchronized (this) {
+                        notifyAll(); // Notifica a otros vehículos que el cruce está libre
+                    }
+                    scheduleNext();
+                });
+                pause.play();
+            }
+
+            // VIENE DEL ESTE Y DA LA VUELTA EN U
+            if (vehicle.getCalle().equals("East") && vehicle.getDirection().equals("East")) {
+                while (crossingSouthOccupied.get() || crossingNorthOccupied.get() || crossingEastOccupied.get()) {
+                    try {
+                        wait(); // Espera hasta que el cruce se libere
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
+                }
+                crossingSouthOccupied.set(true);
+                crossingNorthOccupied.set(true);
+                crossingEastOccupied.set(true);
+
+                PauseTransition pause = new PauseTransition(Duration.millis(1));
+                pause.setOnFinished(event -> {
+                    HelloController.moveEastUTurn(vehicle);
+                    crossingSouthOccupied.set(false);
+                    crossingNorthOccupied.set(false);
+                    crossingEastOccupied.set(false);
+                    synchronized (this) {
+                        notifyAll(); // Notifica a otros vehículos que el cruce está libre
+                    }
+                    scheduleNext();
+                });
+                pause.play();
+            }
+
+            // VIENE DEL ESTE Y GIRA A LA DERECHA
+            if (vehicle.getCalle().equals("East") && vehicle.getDirection().equals("North")) {
+                while (crossingNorthOccupied.get() || crossingEastOccupied.get()) {
+                    try {
+                        wait(); // Espera hasta que el cruce se libere
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
+                }
+                crossingNorthOccupied.set(true);
+                crossingEastOccupied.set(true);
+
+                PauseTransition pause = new PauseTransition(Duration.millis(1));
+                pause.setOnFinished(event -> {
+                    HelloController.moveEastRightTurn(vehicle);
+                    crossingNorthOccupied.set(false);
+                    crossingEastOccupied.set(false);
+                    synchronized (this) {
+                        notifyAll(); // Notifica a otros vehículos que el cruce está libre
+                    }
+                    scheduleNext();
+                });
+                pause.play();
+            }
+
+            // VIENE DEL ESTE Y GIRA A LA IZQUIERDA
+            if (vehicle.getCalle().equals("East") && vehicle.getDirection().equals("South")) {
+                while (crossingNorthOccupied.get() || crossingWestOccupied.get() || crossingEastOccupied.get() || crossingSouthOccupied.get()) {
+                    try {
+                        wait(); // Espera hasta que el cruce se libere
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
+                }
+                crossingNorthOccupied.set(true);
+                crossingWestOccupied.set(true);
+                crossingEastOccupied.set(true);
+                crossingSouthOccupied.set(true);
+
+                PauseTransition pause = new PauseTransition(Duration.millis(1));
+                pause.setOnFinished(event -> {
+                    HelloController.moveEastLeftTurn(vehicle);
+                    crossingNorthOccupied.set(false);
+                    crossingWestOccupied.set(false);
+                    crossingEastOccupied.set(false);
+                    crossingSouthOccupied.set(false);
+                    synchronized (this) {
+                        notifyAll(); // Notifica a otros vehículos que el cruce está libre
+                    }
+                    scheduleNext();
+                });
+                pause.play();
+            }
+
+            // VIENE DEL OESTE Y SIGUE DERECHO
+            if (vehicle.getCalle().equals("West") && vehicle.getDirection().equals("East")) {
+                while (crossingSouthOccupied.get()) {
+                    try {
+                        wait(); // Espera hasta que el cruce se libere
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
+                }
+                crossingSouthOccupied.set(true); // Marca el cruce como ocupado
+
+                PauseTransition pause = new PauseTransition(Duration.millis(1));
+                pause.setOnFinished(event -> {
+                    HelloController.moveWest(vehicle);
+                    HelloController.updatePositionsWest();
+                    crossingSouthOccupied.set(false); // Libera el cruce
+                    synchronized (this) {
+                        notifyAll(); // Notifica a otros vehículos que el cruce está libre
+                    }
+                    scheduleNext();
+                });
+                pause.play();
+            }
+
+            // VIENE DEL OESTE Y DA LA VUELTA EN U
+            if (vehicle.getCalle().equals("West") && vehicle.getDirection().equals("West")) {
+                while (crossingSouthOccupied.get() || crossingNorthOccupied.get() || crossingWestOccupied.get()) {
+                    try {
+                        wait(); // Espera hasta que el cruce se libere
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
+                }
+                crossingSouthOccupied.set(true);
+                crossingNorthOccupied.set(true);
+                crossingWestOccupied.set(true);
+
+                PauseTransition pause = new PauseTransition(Duration.millis(1));
+                pause.setOnFinished(event -> {
+                    HelloController.moveWestUTurn(vehicle);
+                    crossingSouthOccupied.set(false);
+                    crossingNorthOccupied.set(false);
+                    crossingWestOccupied.set(false);
+                    synchronized (this) {
+                        notifyAll(); // Notifica a otros vehículos que el cruce está libre
+                    }
+                    scheduleNext();
+                });
+                pause.play();
+            }
+
+            // VIENE DEL OESTE Y GIRA A LA DERECHA
+            if (vehicle.getCalle().equals("West") && vehicle.getDirection().equals("South")) {
+                while (crossingSouthOccupied.get() || crossingWestOccupied.get()) {
+                    try {
+                        wait(); // Espera hasta que el cruce se libere
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
+                }
+                crossingSouthOccupied.set(true);
+                crossingWestOccupied.set(true);
+
+                PauseTransition pause = new PauseTransition(Duration.millis(1));
+                pause.setOnFinished(event -> {
+                    HelloController.moveWestRightTurn(vehicle);
+                    crossingSouthOccupied.set(false);
+                    crossingWestOccupied.set(false);
+                    synchronized (this) {
+                        notifyAll(); // Notifica a otros vehículos que el cruce está libre
+                    }
+                    scheduleNext();
+                });
+                pause.play();
+            }
+
+            // VIENE DEL OESTE Y GIRA A LA IZQUIERDA
+            if (vehicle.getCalle().equals("West") && vehicle.getDirection().equals("North")) {
+                while (crossingNorthOccupied.get() || crossingWestOccupied.get() || crossingEastOccupied.get() || crossingSouthOccupied.get()) {
+                    try {
+                        wait(); // Espera hasta que el cruce se libere
+                    } catch (InterruptedException e) {
+                        Thread.currentThread().interrupt();
+                    }
+                }
+                crossingNorthOccupied.set(true);
+                crossingWestOccupied.set(true);
+                crossingEastOccupied.set(true);
+                crossingSouthOccupied.set(true);
+
+                PauseTransition pause = new PauseTransition(Duration.millis(1));
+                pause.setOnFinished(event -> {
+                    HelloController.moveWestLeftTurn(vehicle);
+                    crossingNorthOccupied.set(false);
+                    crossingWestOccupied.set(false);
+                    crossingEastOccupied.set(false);
+                    crossingSouthOccupied.set(false);
+                    synchronized (this) {
+                        notifyAll(); // Notifica a otros vehículos que el cruce está libre
+                    }
+                    scheduleNext();
+                });
+                pause.play();
+            }
+        });
+        scheduleNext();
     }
 
-    public List<Intersection> getIntersections() {
-        return intersections;
+    public void addVehicle(Vehicle vehicle) {
+        if (vehicle.isEmergency()) {
+            Emergencyqueue.add(vehicle);
+        }
+        queue.add(vehicle);
     }
+
+
 }

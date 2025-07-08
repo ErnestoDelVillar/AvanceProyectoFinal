@@ -10,6 +10,6 @@ module com.example.avanceproyectofinal {
     requires eu.hansolo.tilesfx;
     requires com.almasb.fxgl.all;
 
-    opens com.example.avanceproyectofinal to javafx.fxml;
-    exports com.example.avanceproyectofinal;
+    opens com.example to javafx.fxml;
+    exports com.example;
 }
