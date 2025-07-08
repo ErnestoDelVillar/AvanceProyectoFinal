@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" prefHeight="800.0" prefWidth="1008.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="escenario1.HelloController">
+    <children>
+        <Label text="Generar Autos" />
+        <GridPane alignment="CENTER" hgap="10" vgap="10">
+            <children>
+                <!-- ToggleButtons for directions -->
+                <ToggleButton fx:id="toggleNorth" text="Norte" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
+                <ToggleButton fx:id="toggleSouth" text="Sur" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
+                <ToggleButton fx:id="toggleEast" text="Este" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
+                <ToggleButton fx:id="toggleWest" text="Oeste" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="0" />
+
+                <!-- Buttons for actions -->
+                <Button fx:id="btnStraight" onAction="#handleStraight" text="Siga Derecho" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                <Button fx:id="btnUTurn" onAction="#handleUTurn" text="Vuelta en U" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                <Button fx:id="btnLeftTurn" onAction="#handleLeftTurn" text="Gire a la Izquierda" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                <Button fx:id="btnRightTurn" onAction="#handleRightTurn" text="Gire a la Derecha" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                <RadioButton fx:id="emergencia" mnemonicParsing="false" text="Emergencia" GridPane.columnIndex="5" />
+            </children>
+            <columnConstraints>
+                <ColumnConstraints />
+                <ColumnConstraints />
+                <ColumnConstraints />
+                <ColumnConstraints />
+                <ColumnConstraints />
+                <ColumnConstraints />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints />
+                <RowConstraints />
+            </rowConstraints>
+        </GridPane>
+        <AnchorPane fx:id="imageContainer" prefHeight="600.0" prefWidth="800.0" />
+        <StackPane fx:id="stackContainer" prefHeight="150.0" prefWidth="200.0">
+            <children>
+                <ImageView fx:id="backgroundImage" fitHeight="700.0" fitWidth="700.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@Fondo.png" />
+                    </image>
+                </ImageView>
+            </children>
+        </StackPane>
+    </children>
+    <padding>
+        <Insets left="1.0" right="1.0" />
+    </padding>
+</VBox>
