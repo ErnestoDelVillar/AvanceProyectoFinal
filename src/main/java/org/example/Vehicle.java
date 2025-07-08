@@ -4,11 +4,8 @@ import javafx.animation.TranslateTransition;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 
-import java.util.concurrent.atomic.AtomicLong;
-
 public class Vehicle implements Comparable<Vehicle> {
-
-    private static AtomicLong idGenerator;
+    private static int nextId = 1;
     private int id;
     private boolean emergency;
     private String direction;
@@ -25,7 +22,7 @@ public class Vehicle implements Comparable<Vehicle> {
     }
 
     public Vehicle(boolean emergency, String direction, String calle, ImageView imageView) {
-        this.idGenerator = new AtomicLong(0);
+        this.id = nextId++;
         this.emergency = emergency;
         this.direction = direction;
         this.calle = calle;

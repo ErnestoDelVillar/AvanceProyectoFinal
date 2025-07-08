@@ -90,8 +90,8 @@ public class TrafficController {
 
                 PauseTransition pause = new PauseTransition(Duration.millis(1));
                 pause.setOnFinished(event -> {
-                    HelloController.moveNorth(vehicle);
-                    HelloController.updatePositionsNorth();
+                    TrafficSimulation.moveNorth(vehicle);
+                    TrafficSimulation.updatePositionsNorth();
                     crossingWestOccupied.set(false); // Libera el cruce
                     synchronized (this) {
                         notifyAll(); // Notifica a otros vehículos que el cruce está libre
@@ -115,7 +115,7 @@ public class TrafficController {
 
                 PauseTransition pause = new PauseTransition(Duration.millis(1));
                 pause.setOnFinished(event -> {
-                    HelloController.moveNorthUTurn(vehicle);
+                    TrafficSimulation.moveNorthUTurn(vehicle);
                     crossingNorthOccupied.set(false);
                     crossingWestOccupied.set(false);
                     crossingEastOccupied.set(false);
@@ -140,7 +140,7 @@ public class TrafficController {
 
                 PauseTransition pause = new PauseTransition(Duration.millis(1));
                 pause.setOnFinished(event -> {
-                    HelloController.moveNorthRightTurn(vehicle);
+                    TrafficSimulation.moveNorthRightTurn(vehicle);
                     crossingNorthOccupied.set(false);
                     crossingWestOccupied.set(false);
                     synchronized (this) {
@@ -166,7 +166,7 @@ public class TrafficController {
 
                 PauseTransition pause = new PauseTransition(Duration.millis(1));
                 pause.setOnFinished(event -> {
-                    HelloController.moveNorthLeftTurn(vehicle);
+                    TrafficSimulation.moveNorthLeftTurn(vehicle);
                     crossingNorthOccupied.set(false);
                     crossingWestOccupied.set(false);
                     crossingEastOccupied.set(false);
@@ -192,8 +192,8 @@ public class TrafficController {
 
                 PauseTransition pause = new PauseTransition(Duration.millis(1));
                 pause.setOnFinished(event -> {
-                    HelloController.moveSouth(vehicle);
-                    HelloController.updatePositionsNorth();
+                    TrafficSimulation.moveSouth(vehicle);
+                    TrafficSimulation.updatePositionsNorth();
                     crossingEastOccupied.set(false); // Libera el cruce
                     synchronized (this) {
                         notifyAll(); // Notifica a otros vehículos que el cruce está libre
@@ -217,7 +217,7 @@ public class TrafficController {
 
                 PauseTransition pause = new PauseTransition(Duration.millis(1));
                 pause.setOnFinished(event -> {
-                    HelloController.moveSouthUTurn(vehicle);
+                    TrafficSimulation.moveSouthUTurn(vehicle);
                     crossingSouthOccupied.set(false);
                     crossingWestOccupied.set(false);
                     crossingEastOccupied.set(false);
@@ -242,7 +242,7 @@ public class TrafficController {
 
                 PauseTransition pause = new PauseTransition(Duration.millis(1));
                 pause.setOnFinished(event -> {
-                    HelloController.moveSouthRightTurn(vehicle);
+                    TrafficSimulation.moveSouthRightTurn(vehicle);
                     crossingSouthOccupied.set(false);
                     crossingEastOccupied.set(false);
                     synchronized (this) {
@@ -268,7 +268,7 @@ public class TrafficController {
 
                 PauseTransition pause = new PauseTransition(Duration.millis(1));
                 pause.setOnFinished(event -> {
-                    HelloController.moveSouthLeftTurn(vehicle);
+                    TrafficSimulation.moveSouthLeftTurn(vehicle);
                     crossingNorthOccupied.set(false);
                     crossingWestOccupied.set(false);
                     crossingEastOccupied.set(false);
@@ -294,8 +294,8 @@ public class TrafficController {
 
                 PauseTransition pause = new PauseTransition(Duration.millis(1));
                 pause.setOnFinished(event -> {
-                    HelloController.moveEast(vehicle);
-                    HelloController.updatePositionsEast();
+                    TrafficSimulation.moveEast(vehicle);
+                    TrafficSimulation.updatePositionsEast();
                     crossingNorthOccupied.set(false); // Libera el cruce
                     synchronized (this) {
                         notifyAll(); // Notifica a otros vehículos que el cruce está libre
@@ -320,7 +320,7 @@ public class TrafficController {
 
                 PauseTransition pause = new PauseTransition(Duration.millis(1));
                 pause.setOnFinished(event -> {
-                    HelloController.moveEastUTurn(vehicle);
+                    TrafficSimulation.moveEastUTurn(vehicle);
                     crossingSouthOccupied.set(false);
                     crossingNorthOccupied.set(false);
                     crossingEastOccupied.set(false);
@@ -346,7 +346,7 @@ public class TrafficController {
 
                 PauseTransition pause = new PauseTransition(Duration.millis(1));
                 pause.setOnFinished(event -> {
-                    HelloController.moveEastRightTurn(vehicle);
+                    TrafficSimulation.moveEastRightTurn(vehicle);
                     crossingNorthOccupied.set(false);
                     crossingEastOccupied.set(false);
                     synchronized (this) {
@@ -373,7 +373,7 @@ public class TrafficController {
 
                 PauseTransition pause = new PauseTransition(Duration.millis(1));
                 pause.setOnFinished(event -> {
-                    HelloController.moveEastLeftTurn(vehicle);
+                    TrafficSimulation.moveEastLeftTurn(vehicle);
                     crossingNorthOccupied.set(false);
                     crossingWestOccupied.set(false);
                     crossingEastOccupied.set(false);
@@ -399,8 +399,8 @@ public class TrafficController {
 
                 PauseTransition pause = new PauseTransition(Duration.millis(1));
                 pause.setOnFinished(event -> {
-                    HelloController.moveWest(vehicle);
-                    HelloController.updatePositionsWest();
+                    TrafficSimulation.moveWest(vehicle);
+                    TrafficSimulation.updatePositionsWest();
                     crossingSouthOccupied.set(false); // Libera el cruce
                     synchronized (this) {
                         notifyAll(); // Notifica a otros vehículos que el cruce está libre
@@ -425,7 +425,7 @@ public class TrafficController {
 
                 PauseTransition pause = new PauseTransition(Duration.millis(1));
                 pause.setOnFinished(event -> {
-                    HelloController.moveWestUTurn(vehicle);
+                    TrafficSimulation.moveWestUTurn(vehicle);
                     crossingSouthOccupied.set(false);
                     crossingNorthOccupied.set(false);
                     crossingWestOccupied.set(false);
@@ -451,7 +451,7 @@ public class TrafficController {
 
                 PauseTransition pause = new PauseTransition(Duration.millis(1));
                 pause.setOnFinished(event -> {
-                    HelloController.moveWestRightTurn(vehicle);
+                    TrafficSimulation.moveWestRightTurn(vehicle);
                     crossingSouthOccupied.set(false);
                     crossingWestOccupied.set(false);
                     synchronized (this) {
@@ -478,7 +478,7 @@ public class TrafficController {
 
                 PauseTransition pause = new PauseTransition(Duration.millis(1));
                 pause.setOnFinished(event -> {
-                    HelloController.moveWestLeftTurn(vehicle);
+                    TrafficSimulation.moveWestLeftTurn(vehicle);
                     crossingNorthOccupied.set(false);
                     crossingWestOccupied.set(false);
                     crossingEastOccupied.set(false);
