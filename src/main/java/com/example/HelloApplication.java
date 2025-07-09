@@ -20,7 +20,7 @@ public class HelloApplication extends Application {
     public void start(Stage stage) throws IOException {
         URL fxmlLocation = HelloApplication.class.getResource("/hello-view.fxml");
         if (fxmlLocation == null) {
-            System.err.println("Cannot find FXML file at /hello-view.fxml");
+            System.err.println("No se puedo encontrar /hello-view.fxml");
             throw new IOException("FXML file not found");
         }
         FXMLLoader fxmlLoader = new FXMLLoader(fxmlLocation);
@@ -31,6 +31,7 @@ public class HelloApplication extends Application {
     }
 
     public static void main(String[] args) {
+
         launch();
     }
 
@@ -38,7 +39,7 @@ public class HelloApplication extends Application {
     public void escenario1() throws IOException {
         URL fxmlLocation = HelloApplication.class.getResource("/escenario1/hello-view.fxml");
         if (fxmlLocation == null) {
-            System.err.println("Cannot find FXML file at /escenario1/hello-view.fxml");
+            System.err.println("No se encontro el FXML en /escenario1/hello-view.fxml");
             throw new IOException("FXML file not found");
         }
         FXMLLoader fxmlLoader = new FXMLLoader(fxmlLocation);
@@ -48,7 +49,6 @@ public class HelloApplication extends Application {
         stage.setScene(scene);
         stage.show();
 
-        // Obtener el controlador
         HelloController controller = fxmlLoader.getController();
         Intersection intersection01 = new Intersection("1", true);
         AtomicReference<PriorityBlockingQueue<Vehicle>> vehiclesNorth = new AtomicReference<>(new PriorityBlockingQueue<>());

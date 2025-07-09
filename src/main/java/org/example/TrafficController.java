@@ -28,6 +28,7 @@ public class TrafficController {
     private final AtomicBoolean running = new AtomicBoolean(false);
     private Thread workerThread;
 
+    //crea un hilo que estara ejecutando constatemente los vehiculos en fila
     public TrafficController() {
         workerThread = new Thread(this::processQueue);
         running.set(true);
@@ -40,6 +41,7 @@ public class TrafficController {
         }
     }
 
+    // se encarga de los vehiculos y le da prioridad a las ambulancias
     private void processQueue() {
         while (running.get()) {
             if (!Emergencyqueue.isEmpty()) {
@@ -75,6 +77,7 @@ public class TrafficController {
         }
     }
 
+    //
     private synchronized void addVehicleAnimation(Vehicle vehicle) {
         tasks.offer(() -> {
             // VIENE DEL NORTE Y SIGUE DERECHO
@@ -494,6 +497,7 @@ public class TrafficController {
         scheduleNext();
     }
 
+    //Agrega un vehiculo a la simulacion y si es de emergencia tambien
     public void addVehicle(Vehicle vehicle) {
         if (vehicle.isEmergency()) {
             Emergencyqueue.add(vehicle);

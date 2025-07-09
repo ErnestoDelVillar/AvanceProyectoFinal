@@ -55,6 +55,7 @@ public class TrafficSimulation implements Initializable {
         toggleWest.setToggleGroup(directionGroup);
     }
 
+    //devuelve el texto del boton selecionado
     private String getSelectedDirection() {
         ToggleButton selectedToggle = (ToggleButton) directionGroup.getSelectedToggle();
         if (selectedToggle != null) {
@@ -267,7 +268,6 @@ public class TrafficSimulation implements Initializable {
         AllVehicles.add(vehicle);
 
         InicialMovementNorth(vehicle);
-//        trafficController.addVehicle(vehicle);
     }
 
     public void handleCreateEmergencyVehicleNorth() {
@@ -292,7 +292,6 @@ public class TrafficSimulation implements Initializable {
         AllVehicles.add(vehicle);
 
         InicialMovementNorth(vehicle);
-//        trafficController.addVehicle(vehicle);
     }
 
     public void handleCreateVehicleNorthUTurn() {
@@ -317,7 +316,6 @@ public class TrafficSimulation implements Initializable {
         AllVehicles.add(vehicle);
 
         InicialMovementNorth(vehicle);
-//        trafficController.addVehicle(vehicle);
     }
 
     public void handleCreateEmergencyVehicleNorthUTurn() {
@@ -342,7 +340,6 @@ public class TrafficSimulation implements Initializable {
         AllVehicles.add(vehicle);
 
         InicialMovementNorth(vehicle);
-//        trafficController.addVehicle(vehicle);
     }
 
     public void handleCreateVehicleNorthRightTurn() {
@@ -367,7 +364,6 @@ public class TrafficSimulation implements Initializable {
         AllVehicles.add(vehicle);
 
         InicialMovementNorth(vehicle);
-//        trafficController.addVehicle(vehicle);
     }
 
     public void handleCreateEmergencyVehicleNorthRightTurn() {
@@ -392,7 +388,6 @@ public class TrafficSimulation implements Initializable {
         AllVehicles.add(vehicle);
 
         InicialMovementNorth(vehicle);
-//        trafficController.addVehicle(vehicle);
     }
 
     public void handleCreateVehicleNorthLeftTurn() {
@@ -417,7 +412,6 @@ public class TrafficSimulation implements Initializable {
         AllVehicles.add(vehicle);
 
         InicialMovementNorth(vehicle);
-//        trafficController.addVehicle(vehicle);
     }
 
     public void handleCreateEmergencyVehicleNorthLeftTurn() {
@@ -442,7 +436,6 @@ public class TrafficSimulation implements Initializable {
         AllVehicles.add(vehicle);
 
         InicialMovementNorth(vehicle);
-//        trafficController.addVehicle(vehicle);
     }
 
     public void InicialMovementNorth(Vehicle car) {
@@ -452,8 +445,6 @@ public class TrafficSimulation implements Initializable {
             Ypos = -130;
         } else if (cantNorth == 2) {
             Ypos = -220;
-        } else if (cantNorth == 3) {
-            Ypos = -310;
         }
 
         TranslateTransition initialTransition = new TranslateTransition(Duration.seconds(1), car.getImageView());
@@ -468,7 +459,7 @@ public class TrafficSimulation implements Initializable {
     }
 
     public static void moveNorth(Vehicle car) {
-        int Ypos = 400;
+        int Ypos = 350;
 
         TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(3), car.getImageView());
         vehiclesNorth.remove(car);
@@ -481,7 +472,6 @@ public class TrafficSimulation implements Initializable {
         });
         translateTransition.play();
         cantNorth--;
-//        updatePositionsNorth();
     }
 
     public static void moveNorthUTurn(Vehicle car) {
@@ -502,7 +492,7 @@ public class TrafficSimulation implements Initializable {
             translateTransition2.setOnFinished(event2 -> {
                 car.getImageView().setRotate(360);
                 TranslateTransition translateTransition3 = new TranslateTransition(Duration.seconds(1), car.getImageView());
-                translateTransition3.setToY(-400);
+                translateTransition3.setToY(-350);
                 translateTransition3.play();
 
                 translateTransition3.setOnFinished(event3 -> {
@@ -535,7 +525,7 @@ public class TrafficSimulation implements Initializable {
             translateTransition2.setOnFinished(event2 -> {
                 car.getImageView().setRotate(270);
                 TranslateTransition translateTransition3 = new TranslateTransition(Duration.seconds(1), car.getImageView());
-                translateTransition3.setToX(-400);
+                translateTransition3.setToX(-350);
                 translateTransition3.play();
 
                 translateTransition3.setOnFinished(event3 -> {
@@ -593,8 +583,6 @@ public class TrafficSimulation implements Initializable {
                 Ypos = -130;
             } else if (index == 1) {
                 Ypos = -220;
-            } else if (index == 2) {
-                Ypos = -310;
             }
 
             TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), vehicle.getImageView());
@@ -628,7 +616,6 @@ public class TrafficSimulation implements Initializable {
         AllVehicles.add(vehicle);
 
         InicialMovementSouth(vehicle);
-//        trafficController.addVehicle(vehicle);
     }
 
     public void handleCreateEmergencyVehicleSouth() {
@@ -652,7 +639,6 @@ public class TrafficSimulation implements Initializable {
         AllVehicles.add(vehicle);
 
         InicialMovementSouth(vehicle);
-//        trafficController.addVehicle(vehicle);
     }
 
     public void handleCreateVehicleSouthUTurn() {
@@ -676,7 +662,6 @@ public class TrafficSimulation implements Initializable {
         AllVehicles.add(vehicle);
 
         InicialMovementSouth(vehicle);
-//        trafficController.addVehicle(vehicle);
     }
 
 
@@ -701,7 +686,6 @@ public class TrafficSimulation implements Initializable {
         AllVehicles.add(vehicle);
 
         InicialMovementSouth(vehicle);
-//        trafficController.addVehicle(vehicle);
     }
 
     public void handleCreateVehicleSouthRightTurn() {
@@ -725,7 +709,6 @@ public class TrafficSimulation implements Initializable {
         AllVehicles.add(vehicle);
 
         InicialMovementSouth(vehicle);
-//        trafficController.addVehicle(vehicle);
     }
 
     public void handleCreateEmergencyVehicleSouthRightTurn() {
@@ -749,7 +732,6 @@ public class TrafficSimulation implements Initializable {
         AllVehicles.add(vehicle);
 
         InicialMovementSouth(vehicle);
-//        trafficController.addVehicle(vehicle);
     }
 
     public void handleCreateVehicleSouthLeftTurn() {
@@ -773,7 +755,6 @@ public class TrafficSimulation implements Initializable {
         AllVehicles.add(vehicle);
 
         InicialMovementSouth(vehicle);
-//        trafficController.addVehicle(vehicle);
     }
 
 
@@ -798,7 +779,6 @@ public class TrafficSimulation implements Initializable {
         AllVehicles.add(vehicle);
 
         InicialMovementSouth(vehicle);
-//        trafficController.addVehicle(vehicle);
     }
 
 
@@ -809,8 +789,6 @@ public class TrafficSimulation implements Initializable {
             Ypos = 130;
         else if (cantSouth == 2)
             Ypos = 220;
-        else if (cantSouth == 3)
-            Ypos = 310;
 
         TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), car.getImageView());
         translateTransition.setToY(Ypos);
@@ -821,7 +799,7 @@ public class TrafficSimulation implements Initializable {
     }
 
     public static void moveSouth(Vehicle car) {
-        int Ypos = -400;
+        int Ypos = -350;
 
         TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(3), car.getImageView());
         vehiclesSouth.remove(car);
@@ -860,7 +838,7 @@ public class TrafficSimulation implements Initializable {
             translateTransition2.setOnFinished(event2 -> {
                 car.getImageView().setRotate(-180);
                 TranslateTransition translateTransition3 = new TranslateTransition(Duration.seconds(1), car.getImageView());
-                translateTransition3.setToY(400);
+                translateTransition3.setToY(350);
                 translateTransition3.play();
 
                 translateTransition3.setOnFinished(event3 -> {
@@ -892,7 +870,7 @@ public class TrafficSimulation implements Initializable {
             translateTransition2.setOnFinished(event2 -> {
                 car.getImageView().setRotate(-270);
                 TranslateTransition translateTransition3 = new TranslateTransition(Duration.seconds(1), car.getImageView());
-                translateTransition3.setToX(400);
+                translateTransition3.setToX(350);
                 translateTransition3.play();
 
                 translateTransition3.setOnFinished(event3 -> {
@@ -952,8 +930,6 @@ public class TrafficSimulation implements Initializable {
                 Ypos = 130;
             else if (index == 1)
                 Ypos = 220;
-            else if (index == 2)
-                Ypos = 310;
 
             TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), vehicle.getImageView());
             translateTransition.setToY(Ypos);
@@ -983,7 +959,6 @@ public class TrafficSimulation implements Initializable {
         AllVehicles.add(vehicle);
 
         InicialMovementEast(vehicle);
-//        trafficController.addVehicle(vehicle);
     }
 
 
@@ -1008,7 +983,6 @@ public class TrafficSimulation implements Initializable {
         AllVehicles.add(vehicle);
 
         InicialMovementEast(vehicle);
-//        trafficController.addVehicle(vehicle);
     }
 
 
@@ -1033,7 +1007,6 @@ public class TrafficSimulation implements Initializable {
         AllVehicles.add(vehicle);
 
         InicialMovementEast(vehicle);
-//        trafficController.addVehicle(vehicle);
     }
 
 
@@ -1058,7 +1031,6 @@ public class TrafficSimulation implements Initializable {
         AllVehicles.add(vehicle);
 
         InicialMovementEast(vehicle);
-//        trafficController.addVehicle(vehicle);
     }
 
     public void handleCreateVehicleEastRightTurn() {
@@ -1082,7 +1054,6 @@ public class TrafficSimulation implements Initializable {
         AllVehicles.add(vehicle);
 
         InicialMovementEast(vehicle);
-//        trafficController.addVehicle(vehicle);
     }
 
     public void handleCreateEmergencyVehicleEastRightTurn() {
@@ -1106,7 +1077,6 @@ public class TrafficSimulation implements Initializable {
         AllVehicles.add(vehicle);
 
         InicialMovementEast(vehicle);
-//        trafficController.addVehicle(vehicle);
     }
 
 
@@ -1131,7 +1101,6 @@ public class TrafficSimulation implements Initializable {
         AllVehicles.add(vehicle);
 
         InicialMovementEast(vehicle);
-//        trafficController.addVehicle(vehicle);
     }
 
 
@@ -1156,7 +1125,6 @@ public class TrafficSimulation implements Initializable {
         AllVehicles.add(vehicle);
 
         InicialMovementEast(vehicle);
-//        trafficController.addVehicle(vehicle);
     }
 
 
@@ -1170,8 +1138,6 @@ public class TrafficSimulation implements Initializable {
             Xpos = 130;
         else if (cantEast == 2)
             Xpos = 220;
-        else if (cantEast == 3)
-            Xpos = 310;
 
         TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), car.getImageView());
         translateTransition.setToX(Xpos);
@@ -1217,7 +1183,7 @@ public class TrafficSimulation implements Initializable {
             translateTransition2.setOnFinished(event2 -> {
                 car.getImageView().setRotate(90);
                 TranslateTransition translateTransition3 = new TranslateTransition(Duration.seconds(1), car.getImageView());
-                translateTransition3.setToX(400);
+                translateTransition3.setToX(350);
                 translateTransition3.play();
 
                 translateTransition3.setOnFinished(event3 -> {
@@ -1234,7 +1200,7 @@ public class TrafficSimulation implements Initializable {
 
     public static void moveEastRightTurn(Vehicle car) {
 
-        int Xpos = 40;
+        int Xpos = 55;
 
         TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(0.6), car.getImageView());
         vehiclesEast.remove(car);
@@ -1249,7 +1215,7 @@ public class TrafficSimulation implements Initializable {
             translateTransition2.setOnFinished(event2 -> {
                 car.getImageView().setRotate(360);
                 TranslateTransition translateTransition3 = new TranslateTransition(Duration.seconds(1), car.getImageView());
-                translateTransition3.setToY(-400);
+                translateTransition3.setToY(-350);
                 translateTransition3.play();
 
                 translateTransition3.setOnFinished(event3 -> {
@@ -1339,7 +1305,6 @@ public class TrafficSimulation implements Initializable {
         AllVehicles.add(vehicle);
 
         InicialMovementWest(vehicle);
-//        trafficController.addVehicle(vehicle);
     }
 
 
@@ -1364,7 +1329,6 @@ public class TrafficSimulation implements Initializable {
         AllVehicles.add(vehicle);
 
         InicialMovementWest(vehicle);
-//        trafficController.addVehicle(vehicle);
     }
 
 
@@ -1390,7 +1354,6 @@ public class TrafficSimulation implements Initializable {
         AllVehicles.add(vehicle);
 
         InicialMovementWest(vehicle);
-//        trafficController.addVehicle(vehicle);
     }
 
     public void handleCreateEmergencyVehicleWestUTurn() {
@@ -1414,7 +1377,6 @@ public class TrafficSimulation implements Initializable {
         AllVehicles.add(vehicle);
 
         InicialMovementWest(vehicle);
-//        trafficController.addVehicle(vehicle);
     }
 
     public void handleCreateVehicleWestRightTurn() {
@@ -1438,7 +1400,6 @@ public class TrafficSimulation implements Initializable {
         AllVehicles.add(vehicle);
 
         InicialMovementWest(vehicle);
-//        trafficController.addVehicle(vehicle);
     }
 
     public void handleCreateEmergencyVehicleWestRightTurn() {
@@ -1462,7 +1423,6 @@ public class TrafficSimulation implements Initializable {
         AllVehicles.add(vehicle);
 
         InicialMovementWest(vehicle);
-//        trafficController.addVehicle(vehicle);
     }
 
     public void handleCreateVehicleWestLeftTurn() {
@@ -1486,7 +1446,6 @@ public class TrafficSimulation implements Initializable {
         AllVehicles.add(vehicle);
 
         InicialMovementWest(vehicle);
-//        trafficController.addVehicle(vehicle);
     }
 
 
@@ -1511,7 +1470,6 @@ public class TrafficSimulation implements Initializable {
         AllVehicles.add(vehicle);
 
         InicialMovementWest(vehicle);
-//        trafficController.addVehicle(vehicle);
     }
 
     public void InicialMovementWest(Vehicle car) {
@@ -1568,7 +1526,7 @@ public class TrafficSimulation implements Initializable {
             translateTransition2.setOnFinished(event2 -> {
                 car.getImageView().setRotate(-90);
                 TranslateTransition translateTransition3 = new TranslateTransition(Duration.seconds(1), car.getImageView());
-                translateTransition3.setToX(-400);
+                translateTransition3.setToX(-350);
                 translateTransition3.play();
 
                 translateTransition3.setOnFinished(event3 -> {
@@ -1602,7 +1560,7 @@ public class TrafficSimulation implements Initializable {
             translateTransition2.setOnFinished(event2 -> {
                 car.getImageView().setRotate(-180);
                 TranslateTransition translateTransition3 = new TranslateTransition(Duration.seconds(1), car.getImageView());
-                translateTransition3.setToY(400);
+                translateTransition3.setToY(350);
                 translateTransition3.play();
 
                 translateTransition3.setOnFinished(event3 -> {
@@ -1652,17 +1610,6 @@ public class TrafficSimulation implements Initializable {
 
     }
 
-
-
-
-
-
-
-
-
-
-
-
     static void updatePositionsWest() {
         int index = 0;
         for (Vehicle vehicle : vehiclesWest) {
@@ -1672,49 +1619,11 @@ public class TrafficSimulation implements Initializable {
                 Xpos = -130;
             else if (index == 1)
                 Xpos = -220;
-            else if (index == 2)
-                Xpos = -310;
 
             TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(1), vehicle.getImageView());
             translateTransition.setToX(Xpos);
             translateTransition.play();
             index++;
         }
-    }
-
-    public void pausa() {
-        for (Vehicle vehicle : AllVehicles) {
-            trafficController.addVehicle(vehicle);
-        }
-    }
-
-    private void moveCar(Vehicle car, int Xpos, int Ypos) {
-        TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(3), car.getImageView());
-        translateTransition.setToY(Ypos);
-        translateTransition.play();
-    }
-
-    @FXML
-    public void handleMoveCar(int index, int Xpos, int Ypos) {
-        if (index >= 0 && index < vehicles.size()) {
-            vehicles.get(index).move(Xpos, Ypos);
-        }
-    }
-
-    @FXML
-    public void handleMoveImageBtn() {
-    }
-
-    public void moveImageBtn(int index) {
-        if (index >= 0 && index < vehicles.size()) {
-            ImageView selectedImage = vehicles.get(index).getImageView();
-            animateCarBtn(selectedImage);
-        }
-    }
-
-    private void animateCarBtn(ImageView carImage) {
-        TranslateTransition translateTransition = new TranslateTransition(Duration.seconds(2), carImage);
-        translateTransition.setToX(carImage.getTranslateX() + 170);
-        translateTransition.play();
     }
 }

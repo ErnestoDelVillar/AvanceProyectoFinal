@@ -10,6 +10,7 @@ import java.io.IOException;
 
 public class HelloController {
 
+//    Esta variable está vinculada al archivo FXML.
     @FXML
     private GridPane gridPane;
 
@@ -17,13 +18,13 @@ public class HelloController {
 
     @FXML
     public void initialize() {
-        // Create button for Escenario 1
+        // Se crea el boton para Escenario 1
         scenario1Button = createScenarioButton("/escenario1/Fondo.png", "Escenario 1");
 
-        // Add button to the GridPane
+        // Se agrega botton de grifpane
         gridPane.add(scenario1Button, 0, 0);
 
-        // Configure button action
+        // Configuracion de boton de action
         scenario1Button.setOnAction(e -> selectScenario());
     }
 
