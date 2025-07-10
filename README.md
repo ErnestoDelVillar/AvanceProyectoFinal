@@ -1,4 +1,3 @@
-Simulación de Tráfico
 Pontificia Universidad Católica Madre y Maestra
 Nombre y Matrícula:
 
