@@ -4,35 +4,39 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bc302017-98e0-4c9b-8ffa-b6cb597a8208" name="Changes" comment="Agregado fondo para escenario 2">
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/gradle.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" />
+    <list default="true" id="bc302017-98e0-4c9b-8ffa-b6cb597a8208" name="Changes" comment="Agregado Paquete para escenario 2&#10;Agregando Clase Vehicle.java e Intersection.java para escenario 2">
       <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradlew" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradlew.bat" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/settings.gradle" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/HelloApplication.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/HelloController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Intersection.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/TrafficController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/TrafficSimulation.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Vehicle.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/escenario1/Auto.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/escenario1/AutoEmergencia.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/escenario1/Fondo.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/escenario1/hello-view.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/escenario2/Auto.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/escenario2/AutoEmergencia.png" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/escenario2/Fondo.jpg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/hello-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/AvanceProyectoFinal/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AvanceProyectoFinal/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AvanceProyectoFinal/.idea/.name" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AvanceProyectoFinal/.idea/gradle.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AvanceProyectoFinal/.idea/misc.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AvanceProyectoFinal/.idea/vcs.xml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AvanceProyectoFinal/README.md" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AvanceProyectoFinal/build.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AvanceProyectoFinal/gradle/wrapper/gradle-wrapper.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AvanceProyectoFinal/gradle/wrapper/gradle-wrapper.properties" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AvanceProyectoFinal/gradlew" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AvanceProyectoFinal/gradlew.bat" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AvanceProyectoFinal/settings.gradle" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AvanceProyectoFinal/src/main/java/com/example/HelloApplication.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AvanceProyectoFinal/src/main/java/com/example/HelloController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AvanceProyectoFinal/src/main/java/escenario2/Intersection.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AvanceProyectoFinal/src/main/java/escenario2/Vehicle.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AvanceProyectoFinal/src/main/java/module-info.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AvanceProyectoFinal/src/main/java/org/example/Intersection.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AvanceProyectoFinal/src/main/java/org/example/TrafficController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AvanceProyectoFinal/src/main/java/org/example/TrafficSimulation.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AvanceProyectoFinal/src/main/java/org/example/Vehicle.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AvanceProyectoFinal/src/main/resources/escenario1/Auto.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AvanceProyectoFinal/src/main/resources/escenario1/AutoEmergencia.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AvanceProyectoFinal/src/main/resources/escenario1/Fondo.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AvanceProyectoFinal/src/main/resources/escenario1/hello-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AvanceProyectoFinal/src/main/resources/escenario2/Auto.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AvanceProyectoFinal/src/main/resources/escenario2/AutoEmergencia.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AvanceProyectoFinal/src/main/resources/escenario2/Fondo2.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/AvanceProyectoFinal/src/main/resources/hello-view.fxml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -68,19 +72,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.Paralela [:com.example.HelloApplication.main()].executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Paralela [:com.example.HelloApplication.main()].executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/black/Desktop/Paralela/AvanceProyectoFinal&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
-    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
-      <option name="filePath" />
-      <method v="2" />
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="Paralela" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
     </configuration>
   </component>
   <component name="TaskManager">
@@ -99,11 +106,20 @@
       <option name="project" value="LOCAL" />
       <updated>1755271656767</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Agregado Paquete para escenario 2&#10;Agregando Clase Vehicle.java e Intersection.java para escenario 2">
+      <option name="closed" value="true" />
+      <created>1755605485359</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1755605485359</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Agregado fondo para escenario 2" />
-    <option name="LAST_COMMIT_MESSAGE" value="Agregado fondo para escenario 2" />
+    <MESSAGE value="Agregado Paquete para escenario 2&#10;Agregando Clase Vehicle.java e Intersection.java para escenario 2" />
+    <option name="LAST_COMMIT_MESSAGE" value="Agregado Paquete para escenario 2&#10;Agregando Clase Vehicle.java e Intersection.java para escenario 2" />
   </component>
 </project>
