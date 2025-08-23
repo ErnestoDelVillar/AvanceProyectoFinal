@@ -4,8 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bc302017-98e0-4c9b-8ffa-b6cb597a8208" name="Changes" comment="Sacando archivos de la carpeta">
-      <change afterPath="$PROJECT_DIR$/src/main/java/escenario2/TrafficLight.java" afterDir="false" />
+    <list default="true" id="bc302017-98e0-4c9b-8ffa-b6cb597a8208" name="Changes" comment="Agregando clase TrafficLight para representar los semaforos del caso">
+      <change afterPath="$PROJECT_DIR$/src/main/java/escenario2/SecondaryController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/escenario2/TrafficController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -80,22 +81,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Gradle.Paralela [:com.example.HelloApplication.main()].executor": "Run",
-    "Gradle.Paralela [run].executor": "Run",
-    "Gradle.Paralela.executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "git-widget-placeholder": "master",
-    "last_opened_file_path": "C:/Users/black/Desktop/Paralela/AvanceProyectoFinal",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.0",
-    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Gradle.Paralela [:com.example.HelloApplication.main()].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Paralela [run].executor&quot;: &quot;Run&quot;,
+    &quot;Gradle.Paralela.executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/black/Desktop/Paralela/AvanceProyectoFinal&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;project.propVCSSupport.DirectoryMappings&quot;
   }
-}]]></component>
+}</component>
   <component name="RunManager">
     <configuration name="Paralela [run]" type="GradleRunConfiguration" factoryName="Gradle" temporary="true">
       <ExternalSystemSettings>
@@ -163,13 +164,22 @@
       <option name="project" value="LOCAL" />
       <updated>1755743844253</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="Agregando clase TrafficLight para representar los semaforos del caso">
+      <option name="closed" value="true" />
+      <created>1755744641797</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1755744641797</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Agregado fondo para escenario 2" />
     <MESSAGE value="Agregado Paquete para escenario 2&#10;Agregando Clase Vehicle.java e Intersection.java para escenario 2" />
     <MESSAGE value="Sacando archivos de la carpeta" />
-    <option name="LAST_COMMIT_MESSAGE" value="Sacando archivos de la carpeta" />
+    <MESSAGE value="Agregando clase TrafficLight para representar los semaforos del caso" />
+    <option name="LAST_COMMIT_MESSAGE" value="Agregando clase TrafficLight para representar los semaforos del caso" />
   </component>
 </project>
