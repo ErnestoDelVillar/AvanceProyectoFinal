@@ -68,4 +68,65 @@ public class HelloApplication extends Application {
         });
         workerThread.start();
     }
+
+    public void escenario2() throws IOException {
+        FXMLLoader fxmlLoader = new FXMLLoader(escenario2.HelloApplication.class.getResource("hello-view.fxml"));
+
+        Scene scene = new Scene(fxmlLoader.load(), 1280, 800);
+
+        Stage stage = new Stage();
+        stage.setTitle("Escenario 2");
+        stage.setScene(scene);
+        stage.show();
+
+
+        // Obtener el controlador
+        escenario2.HelloController controller = fxmlLoader.getController();
+
+        escenario2.Intersection intersection01 = new escenario2.Intersection("1", true);
+
+        AtomicReference<PriorityBlockingQueue<escenario2.Vehicle>> vehiclesNorth = new AtomicReference<>(new PriorityBlockingQueue<>());
+
+        Thread workerThread = new Thread(() -> {
+            try {
+                while (running) {
+                    Thread.sleep(1000);
+
+
+
+                    escenario2.Vehicle vehicle = vehiclesNorth.get().poll();
+                    if(vehicle != null) {
+                        // HelloController.moveNorth(vehicle);
+
+                        // controller.reduceNorth();
+                        Thread.sleep(2000);
+                    }
+
+
+
+                    /*
+                    intersection01.setVehicles(controller.get_vehiclesNorth());
+                    Vehicle vehicle = intersection01.getNextVehicle();
+                    System.out.println(vehicle.getCalle());
+
+                    */
+
+
+                    /*
+                    while (!controller.getvehicleQueue().isEmpty()) {
+                        Vehicle vehicle = controller.getvehicleQueue().poll();
+                        System.out.println(vehicle);
+                    }*/
+
+
+
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        });
+
+
+        workerThread.start();
+    }
 }

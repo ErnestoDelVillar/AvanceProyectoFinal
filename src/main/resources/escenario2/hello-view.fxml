@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox alignment="CENTER" prefHeight="780.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="escenario2.HelloController">
+    <children>
+        <Label text="Generar Autos" />
+        <GridPane alignment="CENTER" hgap="10" vgap="10">
+            <children>
+
+                <RadioButton fx:id="emergencia" mnemonicParsing="false" text="Emergencia" GridPane.columnIndex="0" GridPane.halignment="CENTER" GridPane.rowIndex="1"/>
+
+                <Button fx:id="btnCenterWest" onAction="#handleCreateVehicleCenterWest" text="Center West" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                <Button fx:id="btnCenterEast" onAction="#handleCreateVehicleCenterEast" text="Center East " GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+
+                <Button fx:id="btnRightTurnWest" onAction="#handleButtonClickRightEast" text="Right Turn West" GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                <Button fx:id="btnLeftTurnWest"  onAction="#handleCreateVehicleCenterWest" text="Left Turn West " GridPane.columnIndex="2" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+
+                <Button fx:id="btnRightTurnEast"    onAction="#handleCreateVehicleCenterWest" text="Right Turn East" GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="1" />
+                <Button fx:id="btnLeftTurnEast" onAction="#handleCreateVehicleCenterWest" text="Left Turn East " GridPane.columnIndex="3" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+
+                <RadioButton fx:id="exit01" mnemonicParsing="false" text="Exit 01" GridPane.columnIndex="5" GridPane.halignment="CENTER" GridPane.rowIndex="1"/>
+                <RadioButton fx:id="exit02" mnemonicParsing="false" text="Exit 02" GridPane.columnIndex="6" GridPane.halignment="CENTER" GridPane.rowIndex="1"/>
+                <RadioButton fx:id="exit03" mnemonicParsing="false" text="Exit 03" GridPane.columnIndex="7" GridPane.halignment="CENTER" GridPane.rowIndex="1"/>
+
+            </children>
+            <columnConstraints>
+                <ColumnConstraints />
+                <ColumnConstraints />
+                <ColumnConstraints />
+                <ColumnConstraints />
+                <ColumnConstraints />
+                <ColumnConstraints />
+            </columnConstraints>
+            <rowConstraints>
+                <RowConstraints />
+                <RowConstraints />
+            </rowConstraints>
+        </GridPane>
+        <AnchorPane fx:id="imageContainer" prefHeight="720.0" prefWidth="1280.0" />
+        <StackPane fx:id="stackContainer" prefHeight="720.0" prefWidth="1280.0">
+            <children>
+                <ImageView fx:id="backgroundImage" fitHeight="720.0" fitWidth="1280.0" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="@/escenario2/Fondo2.jpg" />
+                    </image>
+                </ImageView>
+            </children>
+        </StackPane>
+    </children>
+    <padding>
+        <Insets left="1.0" right="1.0" />
+    </padding>
+</VBox>
