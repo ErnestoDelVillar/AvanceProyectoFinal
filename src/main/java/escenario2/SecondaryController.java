@@ -92,20 +92,6 @@ public class SecondaryController {
                 Thread.currentThread().interrupt();
             }
 
-
-
-           /* if (vehicle.getCalle().equals("East") && vehicle.getDirection().equals("West")) {
-                CountDownLatch latch = new CountDownLatch(1);
-                HelloController.setLatch(latch);
-                //HelloController.updatePositionsCenterWest();
-                HelloController.update();
-
-                try {
-                    latch.await(); // Wait until the update is done
-                } catch (InterruptedException e) {
-                    Thread.currentThread().interrupt();
-                }
-            }*/
         });
         scheduleNext();
     }
