@@ -7,6 +7,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class HelloController {
 
@@ -21,7 +22,7 @@ public class HelloController {
     public void initialize() {
         // Se crea el boton para Escenario 1
         scenario1Button = createScenarioButton("/escenario1/Fondo.png", "Escenario 1");
-        scenario2Button = createScenarioButton("/escenario2/BG.png", "Escenario 2");
+        scenario2Button = createScenarioButton("/escenario2/Fondo2.jpg", "Escenario 2");
 
         // Se agrega botton de grifpane
         gridPane.add(scenario1Button, 0, 0);
@@ -33,7 +34,7 @@ public class HelloController {
     }
 
     private Button createScenarioButton(String imagePath, String text) {
-        Image image = new Image(getClass().getResourceAsStream(imagePath));
+        Image image = new Image(Objects.requireNonNull(getClass().getResourceAsStream(imagePath)));
         ImageView imageView = new ImageView(image);
         imageView.setFitHeight(200);
         imageView.setFitWidth(200);

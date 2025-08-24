@@ -13,6 +13,8 @@ module com.example {
 
     exports org.example;
     exports com.example;
+    exports escenario2;
     opens com.example to javafx.fxml;
     opens org.example to javafx.fxml;
+    opens escenario2 to javafx.fxml;
 }
